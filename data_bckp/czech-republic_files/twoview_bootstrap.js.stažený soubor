@@ -1,0 +1,39 @@
+
+(function twoViewBootstrap(window, document, options) {
+    options.player_data.instant_article_detected = !!window.navigator.userAgent.match(/FBIA/);
+    if (options.instant_article || options.player_data.instant_article_detected) {
+        try {
+            var pBody = parent.document.querySelector('body');
+            pBody.style["margin"] = '0';
+        } catch(e) { }
+    }
+
+    var TWOVIEW_SCRIPT_ID = 'twoview_script';
+    if (!window.atvTwoView) {
+        var twoviewScriptEl = document.getElementById(TWOVIEW_SCRIPT_ID);
+        if (!twoviewScriptEl) { // script file not loaded
+            twoviewScriptEl = document.createElement('script');
+            twoviewScriptEl.id = TWOVIEW_SCRIPT_ID;
+            twoviewScriptEl.src = options.twoview_url;
+            twoviewScriptEl.type = 'text/javascript';
+            twoviewScriptEl.async = true;
+            document.getElementsByTagName('head')[0].appendChild(twoviewScriptEl);
+        }
+        twoviewScriptEl.addEventListener('load', onLoadTwoViewScript);
+    } else { // script file loaded
+        onLoadTwoViewScript();
+    }
+    // start loading the player script
+    function onLoadTwoViewScript() {
+        window.atvTwoView(window, document, options);
+    }
+})(window.top, window.top.document, {
+    "player_url": "https://cdn-sp-s3.air.tv/airtv.js/v/2020-05-06_21-05-44/airtv-2.0.js",
+    "twoview_url": "https://cdn-sp-s3.air.tv/airtv.js/v/2020-05-06_21-05-44/twoview-1.0.js",
+    "embed_host": "embed.air.tv",
+    "twoview_reporting_host": "https://event-listener.air.tv/twoview",
+    "player_data": {"player": {"ip_address": "92.5.84.59", "size": {"type": "fill-width", "aspect_ratio": 1.7777777777777777}, "show_player_title": null, "organization_slug": "9wn109mHSreSsgNR3bI3Rw", "publisher_name": "Freestar", "player_slug": "9Gm8ePBMRNygveG4qjA-og", "ad_url": "https://v.lkqd.net/ad?pid=323&sid=98906&output=vastvpaid&support=html5flash&execution=instream&placement=preroll&playinit=user&dfp=true&volume=__volume__&width=__player-width__&height=__player-height__&dnt=__dnt__&pageurl=__page-url__&contentid=__item-mediaid__&contenttitle=__item-title__&contentlength=__item-duration__&contenturl=__item-url__&rnd=__random-number__&c1=__view-status__&c2=__subid__&c3=__item-title__|__item-mediaid__&c4=__content-owner__&c5=__instant-article__&c6=__vevo-id__", "mobile_ad_url": "https://v.lkqd.net/ad?pid=323&sid=98907&output=vastvpaid&support=html5&execution=instream&placement=preroll&playinit=user&dfp=true&volume=__volume__&width=__player-width__&height=__player-height__&dnt=__dnt__&pageurl=__page-url__&contentid=__item-mediaid__&contenttitle=__item-title__&contentlength=__item-duration__&contenturl=__item-url__&rnd=__random-number__&c1=__view-status__&c2=__subid__&c3=__item-title__|__item-mediaid__&c4=__content-owner__&c5=__instant-article__&c6=__vevo-id__", "reporting_host": "https://event-listener.air.tv/player", "autoplay": false}, "cru_videos": []},
+    "instant_article": false,
+    "viral_options": {"suppress_replacement": true, "suppress_second_view": true},
+    "social_embed_options": {'ad_unit_template': '/152137732/%%DOMAIN%%_outstream_%%DEVICE%%', 'embeds_allowed': ['airtv', 'youtube'], 'sizes': {'desktop': [[120, 240], [180, 150], [200, 200], [250, 250], [300, 250], [336, 280], [728, 90], [640, 480], [400, 300], [410, 230]], 'mobile': [[120, 240], [180, 150], [200, 200], [250, 250], [300, 250], [320, 240], [336, 280], [300, 169], [250, 141]]}},
+});
