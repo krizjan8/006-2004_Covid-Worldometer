@@ -41,8 +41,19 @@ class Country():
        
    def get_death_promile(self):
        """Returns daily covid19 death people per 1000"""
-
-       return [i/self.pop*1000 for i in self.deaths] #divides
+       foo = [i/self.pop*1000 for i in self.deaths] #divides
+       a = []
+       avg_bins = 7
+       for i,x in enumerate(foo):
+           buf = 0
+           if i < avg_bins:
+                continue
+           for y in range(avg_bins):
+               buf = foo[i-y] + buf
+               
+           a.append(buf/avg_bins) 
+       return a    
+       #return [i/self.pop*1000 for i in self.deaths] #divides
       
 
    def fetch_data(self,phrase):
